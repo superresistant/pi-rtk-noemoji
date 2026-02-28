@@ -11,8 +11,7 @@ import {
 	isReadToolResult,
 	isGrepToolResult,
 } from "@mariozechner/pi-coding-agent";
-import { Type } from "@sinclair/typebox";
-import { StringEnum } from "@mariozechner/pi-ai";
+
 import { loadConfig, DEFAULT_CONFIG, type RtkConfig } from "./config";
 import { trackSavings, getMetricsSummary, clearMetrics } from "./metrics";
 import {
@@ -57,11 +56,7 @@ export default function (pi: ExtensionAPI) {
 		}
 	});
 
-	pi.on("before_agent_start", async (event, _ctx) => {
-		return {
-			systemPrompt: `${event.systemPrompt}\n\nIMPORTANT: If you encounter repeated failures to edit a file due to non-matching text or errors like \"The old text must match exactly including all whitespace and newlines\", use the rtk_configure tool to set sourceCodeFilteringEnabled to false, re-read the file, apply your edit, then use rtk_configure again to re-enable sourceCodeFilteringEnabled.`,
-		};
-	});
+
 
 	pi.on("tool_result", async (event, ctx) => {
 		if (!enabled) return;
@@ -307,59 +302,5 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerTool({
-		name: "rtk_configure",
-		label: "RTK Configure",
-		description: `Configure RTK token-reduction techniques at runtime. Use this tool to tune filtering behavior when you encounter issues.
-IMPORTANT: If you encounter repeated failures to edit a file due to non-matching text or errors like "The old text must match exactly including all whitespace and newlines", set this to false temporarily, re-read the file, apply your edit, then re-enable it.
-`,
-		parameters: Type.Object({
-			ansiStripping: Type.Optional(Type.Boolean({ description: "Strip ANSI escape codes from output" })),
-			truncationEnabled: Type.Optional(Type.Boolean({ description: "Enable output truncation" })),
-			truncationMaxChars: Type.Optional(Type.Number({ description: "Maximum characters before truncation" })),
-			sourceCodeFilteringEnabled: Type.Optional(Type.Boolean({ description: "Enable source code filtering on file reads. Disable when edit patch matching fails." })),
-			sourceCodeFilteringLevel: Type.Optional(StringEnum(["minimal", "aggressive"] as const, { description: "Source code filtering aggressiveness.  Use minimal for most cases, and aggressive when you only need to understand basics like function definitions and imports" })),
-			smartTruncationEnabled: Type.Optional(Type.Boolean({ description: "Enable smart truncation of source files" })),
-			smartTruncationMaxLines: Type.Optional(Type.Number({ description: "Maximum lines kept by smart truncation" })),
-			testOutputAggregation: Type.Optional(Type.Boolean({ description: "Aggregate test runner output into a summary" })),
-			buildOutputFiltering: Type.Optional(Type.Boolean({ description: "Filter build output to errors/warnings only" })),
-			gitCompaction: Type.Optional(Type.Boolean({ description: "Compact verbose git output" })),
-			searchResultGrouping: Type.Optional(Type.Boolean({ description: "Group grep/search results by file" })),
-			linterAggregation: Type.Optional(Type.Boolean({ description: "Summarise linter output into an issue table" })),
-		}),
 
-		async execute(_toolCallId, params, _signal, _onUpdate, _ctx) {
-			const t = config.techniques;
-
-			if (params.ansiStripping !== undefined) t.ansiStripping = params.ansiStripping;
-			if (params.truncationEnabled !== undefined) t.truncation.enabled = params.truncationEnabled;
-			if (params.truncationMaxChars !== undefined) t.truncation.maxChars = params.truncationMaxChars;
-			if (params.sourceCodeFilteringEnabled !== undefined) t.sourceCodeFiltering.enabled = params.sourceCodeFilteringEnabled;
-			if (params.sourceCodeFilteringLevel !== undefined) t.sourceCodeFiltering.level = params.sourceCodeFilteringLevel;
-			if (params.smartTruncationEnabled !== undefined) t.smartTruncation.enabled = params.smartTruncationEnabled;
-			if (params.smartTruncationMaxLines !== undefined) t.smartTruncation.maxLines = params.smartTruncationMaxLines;
-			if (params.testOutputAggregation !== undefined) t.testOutputAggregation = params.testOutputAggregation;
-			if (params.buildOutputFiltering !== undefined) t.buildOutputFiltering = params.buildOutputFiltering;
-			if (params.gitCompaction !== undefined) t.gitCompaction = params.gitCompaction;
-			if (params.searchResultGrouping !== undefined) t.searchResultGrouping = params.searchResultGrouping;
-			if (params.linterAggregation !== undefined) t.linterAggregation = params.linterAggregation;
-
-			const summary = [
-				`ansiStripping: ${t.ansiStripping}`,
-				`truncation: enabled=${t.truncation.enabled}, maxChars=${t.truncation.maxChars}`,
-				`sourceCodeFiltering: enabled=${t.sourceCodeFiltering.enabled}, level=${t.sourceCodeFiltering.level}`,
-				`smartTruncation: enabled=${t.smartTruncation.enabled}, maxLines=${t.smartTruncation.maxLines}`,
-				`testOutputAggregation: ${t.testOutputAggregation}`,
-				`buildOutputFiltering: ${t.buildOutputFiltering}`,
-				`gitCompaction: ${t.gitCompaction}`,
-				`searchResultGrouping: ${t.searchResultGrouping}`,
-				`linterAggregation: ${t.linterAggregation}`,
-			].join("\n");
-
-			return {
-				content: [{ type: "text", text: `RTK configuration updated:\n${summary}` }],
-				details: {},
-			};
-		},
-	});
 }
