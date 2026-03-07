@@ -82,6 +82,26 @@ Test Results:
      expected 1, got 2
 ```
 
+## Known issues fixed in this fork
+
+### Command detection was too broad (upstream bug)
+
+Several `is*Command` functions used `command.includes("keyword")` to detect whether a bash command was a build/test/search/linter invocation. This caused false positives:
+
+- **`isSearchCommand`**: `includes("ag")` matched "agent", "package", "manage". `includes("find")` matched "findall", paths containing "find". Any command accidentally classified as a search command had its output reformatted and truncated to 50 results.
+- **`isLinterCommand`**: `includes("black")` matched "blacklist". `includes("ruff")` matched any command with "ruff" as a substring.
+- **`isTestCommand`**: bare `"test"` in TEST_COMMANDS matched any command containing the word "test", replacing the entire output with a test summary. This silently destroyed Python script output whenever a line contained the word "ok" (counted as a passed test).
+
+**Fix**: removed bare `"test"` from TEST_COMMANDS. Changed `isSearchCommand` and `isLinterCommand` to match command names only at command position (start of line or after `|`, `&&`, `;`), not as substrings.
+
+### Source code filtering breaks `edit` tool
+
+The `sourceCodeFiltering` technique strips comments and normalizes whitespace when reading files. The agent then sees modified text, but the `edit` tool requires exact match against the real file content. Edits fail silently or target the wrong text. **Recommendation: keep `sourceCodeFiltering` disabled.**
+
+### Truncation hides scan/data output
+
+Default `truncation.maxChars: 10000` (10KB) and `smartTruncation.maxLines: 200` are too aggressive for projects that read large JSON files, scan results, or verbose script output. Findings get silently dropped. **Recommendation: disable both for data-heavy projects.**
+
 ## Changes from upstream
 
 All changes are in `techniques/*.ts` — emoji in generated output strings replaced with plain text. Regex detection patterns (for parsing test/build output) are untouched.

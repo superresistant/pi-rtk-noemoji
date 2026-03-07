@@ -6,7 +6,12 @@ export function isSearchCommand(command: string | undefined | null): boolean {
 	}
 
 	const cmdLower = command.toLowerCase();
-	return SEARCH_COMMANDS.some((sc) => cmdLower.includes(sc));
+	return SEARCH_COMMANDS.some((sc) => {
+		const escaped = sc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		// Match command name at start of command or after pipe/chain operators,
+		// followed by whitespace, end of string, or another operator
+		return new RegExp(`(?:^|[|;&]\\s*)${escaped}(?:\\s|$|[|;&])`, "m").test(cmdLower);
+	});
 }
 
 interface SearchResult {

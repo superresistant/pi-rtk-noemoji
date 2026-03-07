@@ -6,7 +6,6 @@ interface TestSummary {
 }
 
 const TEST_COMMANDS = [
-	"test",
 	"jest",
 	"vitest",
 	"pytest",
