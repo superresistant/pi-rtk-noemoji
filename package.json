@@ -1,6 +1,6 @@
 {
   "name": "pi-rtk-noemoji",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Fork of pi-rtk with all emoji removed from output. Same token reduction, plain text only.",
   "type": "module",
   "main": "index.ts",
