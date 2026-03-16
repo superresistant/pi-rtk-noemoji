@@ -1,12 +1,23 @@
-const GIT_COMMANDS = ["git diff", "git status", "git log", "git show", "git stash"];
+const GIT_SUBCOMMANDS = ["diff", "status", "log", "show", "stash"];
+
+// Matches "git <sub>" at start of string OR after a shell chain operator (&&, ||, ;, |)
+// Handles both bare "git status" and "cd /path && git status" patterns.
+const GIT_COMMAND_RE = new RegExp(
+	`(?:^|&&\\s*|\\|\\|\\s*|;\\s*|\\|\\s*)git\\s+(${GIT_SUBCOMMANDS.join("|")})(?:\\s|$)`,
+	"m"
+);
 
 export function isGitCommand(command: string | undefined | null): boolean {
 	if (typeof command !== "string" || command.length === 0) {
 		return false;
 	}
+	return GIT_COMMAND_RE.test(command);
+}
 
-	const cmdLower = command.toLowerCase();
-	return GIT_COMMANDS.some((gc) => cmdLower.startsWith(gc));
+// Extract the first matching git subcommand from a compound command string.
+function getGitSubcommand(command: string): string | null {
+	const m = GIT_COMMAND_RE.exec(command);
+	return m ? m[1] : null;
 }
 
 export function compactDiff(output: string, maxLines: number = 50): string {
@@ -97,11 +108,25 @@ interface StatusStats {
 	untrackedFiles: string[];
 }
 
-export function compactStatus(output: string): string {
+export function compactStatus(output: string): string | null {
 	const lines = output.split("\n");
 
 	if (lines.length === 0 || (lines.length === 1 && lines[0].trim() === "")) {
 		return "Clean working tree";
+	}
+
+	// Guard: detect non-porcelain (verbose) git status output.
+	// Porcelain output has lines starting with two-char status codes or "##".
+	// Verbose output starts with prose like "On branch" or "HEAD detached".
+	// Passing verbose output to the porcelain parser produces garbage — bail out.
+	const firstNonEmpty = lines.find((l) => l.trim().length > 0) ?? "";
+	const looksVerbose =
+		firstNonEmpty.startsWith("On branch") ||
+		firstNonEmpty.startsWith("HEAD detached") ||
+		firstNonEmpty.startsWith("nothing to commit") ||
+		firstNonEmpty.startsWith("No commits yet");
+	if (looksVerbose) {
+		return null;
 	}
 
 	const stats: StatusStats = {
@@ -227,17 +252,18 @@ export function compactGitOutput(
 		return null;
 	}
 
-	const cmdLower = command.toLowerCase();
+	const sub = getGitSubcommand(command);
 
-	if (cmdLower.startsWith("git diff")) {
+	if (sub === "diff") {
 		return compactDiff(output);
 	}
 
-	if (cmdLower.startsWith("git status")) {
+	if (sub === "status") {
+		// compactStatus returns null for non-porcelain output — pass through unchanged.
 		return compactStatus(output);
 	}
 
-	if (cmdLower.startsWith("git log")) {
+	if (sub === "log") {
 		return compactLog(output);
 	}
 
