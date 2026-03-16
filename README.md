@@ -84,23 +84,34 @@ Test Results:
 
 ## Known issues fixed in this fork
 
-### Command detection was too broad (upstream bug)
+### `isSearchCommand` / `isLinterCommand`: substring false positives
 
-Several `is*Command` functions used `command.includes("keyword")` to detect whether a bash command was a build/test/search/linter invocation. This caused false positives:
+`includes()` matches anywhere in the command string, not just at the command name position:
 
-- **`isSearchCommand`**: `includes("ag")` matched "agent", "package", "manage". `includes("find")` matched "findall", paths containing "find". Any command accidentally classified as a search command had its output reformatted and truncated to 50 results.
-- **`isLinterCommand`**: `includes("black")` matched "blacklist". `includes("ruff")` matched any command with "ruff" as a substring.
-- **`isTestCommand`**: bare `"test"` in TEST_COMMANDS matched any command containing the word "test", replacing the entire output with a test summary. This silently destroyed Python script output whenever a line contained the word "ok" (counted as a passed test).
+| Check | False positive examples |
+|---|---|
+| `includes("ag")` | `npm run agent`, `manage.py`, any path with "package" |
+| `includes("find")` | paths containing "find", `findall()` calls |
+| `includes("black")` | `blacklist`, any path with "black" |
+| `includes("ruff")` | any path containing "ruff" |
 
-**Fix**: removed bare `"test"` from TEST_COMMANDS. Changed `isSearchCommand` and `isLinterCommand` to match command names only at command position (start of line or after `|`, `&&`, `;`), not as substrings.
+When a false positive fires, the command's output is silently replaced with a reformatted search/linter summary — discarding the real output. `isTestCommand` had the same bug (bare `"test"` matching any command with "test" in it, silently destroying Python script output). **Fix**: regex matching at command position only (start of string or after `|`, `&&`, `;`).
+
+### `isGitCommand`: `startsWith` never matched in practice
+
+`startsWith("git status")` requires the command string to begin with `git`. Agents routinely prefix with a directory change: `cd /repo && git status`. Across 908 real git commands in session history, **0 matched** — gitCompaction was silently inert for all of them. **Fix**: regex matching `git <sub>` after chain operators (`&&`, `||`, `;`, `|`) as well as at start of string.
+
+### `compactStatus`: corrupts verbose `git status` output
+
+`compactStatus` expects porcelain format (`git status -s`). When called with verbose output (`git status` without flags), the parser misreads English prose as two-char status codes — `"Changes not staged for commit:"` becomes `status[0] = 'C'` → staged++, with filename `"anges not staged for commit:"`. Real modified files are not shown. **Fix**: detect verbose output on the first non-empty line and return `null` (pass-through).
 
 ### Source code filtering breaks `edit` tool
 
-The `sourceCodeFiltering` technique strips comments and normalizes whitespace when reading files. The agent then sees modified text, but the `edit` tool requires exact match against the real file content. Edits fail silently or target the wrong text. **Recommendation: keep `sourceCodeFiltering` disabled.**
+`sourceCodeFiltering` strips comments and normalizes whitespace when reading files. The agent sees modified text, but the `edit` tool requires exact match against the real file on disk — edits fail or silently corrupt content. **Recommendation: keep `sourceCodeFiltering` disabled** (it is off in the recommended config above).
 
 ### Truncation hides scan/data output
 
-Default `truncation.maxChars: 10000` (10KB) and `smartTruncation.maxLines: 200` are too aggressive for projects that read large JSON files, scan results, or verbose script output. Findings get silently dropped. **Recommendation: disable both for data-heavy projects.**
+Default `truncation.maxChars: 10000` and `smartTruncation.maxLines: 200` are too aggressive for projects that read large JSON files, scan results, or verbose script output. Findings get silently dropped. **Recommendation: disable both for data-heavy projects.**
 
 ## Changes from upstream
 
