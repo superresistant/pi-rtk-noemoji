@@ -1,0 +1,21 @@
+{
+  "name": "pi-rtk-noemoji",
+  "version": "0.1.7",
+  "description": "Fork of pi-rtk with all emoji removed from output. Same token reduction, plain text only.",
+  "type": "module",
+  "main": "index.ts",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "scripts": {
+    "check": "npx tsc --noEmit"
+  },
+  "author": "Matt Cowger",
+  "license": "MIT",
+  "repository": "github:superresistant/pi-rtk-noemoji",
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
