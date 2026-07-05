@@ -1,0 +1,253 @@
+{
+ "rtk_version": "0.43.0",
+ "total_calls": 130196,
+ "total_out_chars": 200117202,
+ "unique_commands": 117871,
+ "unique_rewritten": 39427,
+ "rewritten_calls": 44828,
+ "rewritten_out_chars": 71853978,
+ "call_coverage_pct": 34.43,
+ "char_coverage_pct": 35.91,
+ "by_target": {
+  "rg": {
+   "calls": 3461,
+   "out_chars": 21760429
+  },
+  "grep": {
+   "calls": 11318,
+   "out_chars": 11389331
+  },
+  "read": {
+   "calls": 5548,
+   "out_chars": 10801108
+  },
+  "git-diff": {
+   "calls": 1056,
+   "out_chars": 4855498
+  },
+  "curl": {
+   "calls": 3548,
+   "out_chars": 4781826
+  },
+  "npx": {
+   "calls": 2698,
+   "out_chars": 4573106
+  },
+  "ls": {
+   "calls": 5290,
+   "out_chars": 3911831
+  },
+  "wc": {
+   "calls": 2082,
+   "out_chars": 1535773
+  },
+  "git-status": {
+   "calls": 1211,
+   "out_chars": 1509490
+  },
+  "git-add": {
+   "calls": 1453,
+   "out_chars": 817261
+  },
+  "git-log": {
+   "calls": 571,
+   "out_chars": 516133
+  },
+  "npm": {
+   "calls": 735,
+   "out_chars": 502676
+  },
+  "gh": {
+   "calls": 235,
+   "out_chars": 497162
+  },
+  "rsync": {
+   "calls": 460,
+   "out_chars": 485832
+  },
+  "tsc": {
+   "calls": 1333,
+   "out_chars": 450409
+  },
+  "vitest": {
+   "calls": 566,
+   "out_chars": 448267
+  },
+  "git-show": {
+   "calls": 183,
+   "out_chars": 416080
+  },
+  "find": {
+   "calls": 499,
+   "out_chars": 367770
+  },
+  "ps": {
+   "calls": 316,
+   "out_chars": 356315
+  },
+  "git-commit": {
+   "calls": 299,
+   "out_chars": 267340
+  },
+  "git--C": {
+   "calls": 92,
+   "out_chars": 223295
+  },
+  "make": {
+   "calls": 85,
+   "out_chars": 195089
+  },
+  "next": {
+   "calls": 158,
+   "out_chars": 156079
+  },
+  "lint": {
+   "calls": 92,
+   "out_chars": 127325
+  },
+  "diff": {
+   "calls": 28,
+   "out_chars": 115521
+  },
+  "cargo": {
+   "calls": 176,
+   "out_chars": 102604
+  },
+  "du": {
+   "calls": 199,
+   "out_chars": 96960
+  },
+  "pip": {
+   "calls": 217,
+   "out_chars": 87222
+  },
+  "pnpm": {
+   "calls": 107,
+   "out_chars": 73446
+  },
+  "git-stash": {
+   "calls": 43,
+   "out_chars": 69877
+  },
+  "pytest": {
+   "calls": 94,
+   "out_chars": 61027
+  },
+  "ls;": {
+   "calls": 7,
+   "out_chars": 41798
+  },
+  "git-push": {
+   "calls": 248,
+   "out_chars": 40722
+  },
+  "docker": {
+   "calls": 23,
+   "out_chars": 33765
+  },
+  "git-fetch": {
+   "calls": 32,
+   "out_chars": 31923
+  },
+  "git-branch": {
+   "calls": 52,
+   "out_chars": 23470
+  },
+  "&&": {
+   "calls": 22,
+   "out_chars": 19813
+  },
+  "playwright": {
+   "calls": 80,
+   "out_chars": 19067
+  },
+  "gcloud": {
+   "calls": 46,
+   "out_chars": 14394
+  },
+  "df": {
+   "calls": 25,
+   "out_chars": 11115
+  },
+  "uv": {
+   "calls": 8,
+   "out_chars": 10509
+  },
+  "git-status;": {
+   "calls": 5,
+   "out_chars": 9455
+  },
+  "dotnet": {
+   "calls": 12,
+   "out_chars": 9116
+  },
+  "ping": {
+   "calls": 14,
+   "out_chars": 6532
+  },
+  "reddit;": {
+   "calls": 1,
+   "out_chars": 6406
+  },
+  "go": {
+   "calls": 33,
+   "out_chars": 4620
+  },
+  "systemctl": {
+   "calls": 4,
+   "out_chars": 4524
+  },
+  "git--c": {
+   "calls": 13,
+   "out_chars": 4517
+  },
+  "prisma": {
+   "calls": 7,
+   "out_chars": 3128
+  },
+  "git-pull": {
+   "calls": 4,
+   "out_chars": 1850
+  },
+  "wget": {
+   "calls": 13,
+   "out_chars": 1725
+  },
+  "iptables": {
+   "calls": 3,
+   "out_chars": 946
+  },
+  "pi-reddit;": {
+   "calls": 1,
+   "out_chars": 870
+  },
+  "skills": {
+   "calls": 1,
+   "out_chars": 807
+  },
+  "git-worktree": {
+   "calls": 1,
+   "out_chars": 303
+  },
+  "shellcheck": {
+   "calls": 12,
+   "out_chars": 303
+  },
+  "psql": {
+   "calls": 5,
+   "out_chars": 87
+  },
+  "tree": {
+   "calls": 1,
+   "out_chars": 73
+  },
+  "ruff": {
+   "calls": 1,
+   "out_chars": 43
+  },
+  "~/dev/pi/pi-rtk-noemoji": {
+   "calls": 1,
+   "out_chars": 15
+  }
+ }
+}

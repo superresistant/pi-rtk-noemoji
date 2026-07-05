@@ -1,0 +1,21 @@
+{
+  "name": "pi-rtk-debunked",
+  "version": "0.2.0",
+  "description": "We measured every token-reduction claim against real usage. One technique survived: ANSI stripping. The proofs are in bench/.",
+  "type": "module",
+  "main": "index.ts",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "scripts": {
+    "check": "npx tsc --noEmit"
+  },
+  "author": "Matt Cowger",
+  "license": "MIT",
+  "repository": "github:superresistant/pi-rtk-debunked",
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}

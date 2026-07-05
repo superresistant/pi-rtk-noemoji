@@ -1,0 +1,32 @@
+[
+ {
+  "task": "gitstate",
+  "arm": "control",
+  "idx": 0,
+  "success": true,
+  "tokens_out": 328,
+  "tokens_in_last": 1288,
+  "cost": 0.017337,
+  "turns": 2,
+  "bash_calls": 1,
+  "dup_bash": 0,
+  "leak_rtk": 0,
+  "session_found": true
+ },
+ {
+  "task": "gitstate",
+  "arm": "rtk",
+  "idx": 0,
+  "success": true,
+  "tokens_out": 282,
+  "tokens_in_last": 1250,
+  "cost": 0.015777000000000003,
+  "turns": 2,
+  "bash_calls": 1,
+  "dup_bash": 0,
+  "leak_rtk": 0,
+  "session_found": true,
+  "probe_calls": 1,
+  "probe_rewritten": 1
+ }
+]

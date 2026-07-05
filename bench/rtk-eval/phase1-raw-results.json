@@ -1,0 +1,357 @@
+{
+ "results": [
+  [
+   false,
+   "git-status: fact 'phase1-branch' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-status: fact 'staged.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-status: fact 'modified.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-status: fact 'untracked.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-status: fact 'conflict.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-status-porcelain-wc: pipe output byte-identical",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-diff: fact 'd1.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-diff: fact 'd2.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-diff: fact 'd3.txt' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-diff: fact 'D1CHANGE' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-diff: fact 'D2CHANGE' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-diff: fact 'D3CHANGE' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-log: fact 'commit-alpha-one' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "git-log: fact 'commit-gamma-three' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "rg-n: fact 'alpha.ts' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "rg-n: fact 'beta.py' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "rg-n: fact 'gamma.md' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "rg-n: fact '3' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "rg-n: fact '7' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "rg-wc: pipe output byte-identical",
+   true,
+   ""
+  ],
+  [
+   true,
+   "rg-l-sort: pipe output byte-identical",
+   true,
+   ""
+  ],
+  [
+   true,
+   "grep-rc: pipe output byte-identical",
+   true,
+   ""
+  ],
+  [
+   true,
+   "read-json-jq: pipe output byte-identical",
+   true,
+   ""
+  ],
+  [
+   false,
+   "ls: fact 'alpha.ts' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "ls: fact 'beta.py' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "ls: fact 'gamma.md' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "ls: fact 'app.ts' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "read-source: fact 'SECRET_VALUE = 12345' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "read-source: fact 'https://api.example.com/v1' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "read-source: fact 'knownFunctionName' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "read-source: fact 'IMPORTANT_COMMENT_FACT' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "vitest: fact 'known_fail_alpha' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "vitest: fact 'known_fail_beta' survives rtk",
+   true,
+   ""
+  ],
+  [
+   false,
+   "vitest: fact '2 failed' survives rtk",
+   false,
+   ""
+  ],
+  [
+   true,
+   "vitest: rtk-format fact 'FAIL (2)' present",
+   true,
+   ""
+  ],
+  [
+   true,
+   "vitest: raw exit nonzero (sanity)",
+   true,
+   "rc=1"
+  ],
+  [
+   true,
+   "vitest: rtk exit nonzero",
+   true,
+   "rc=1"
+  ],
+  [
+   true,
+   "tsc: fact 'app.ts' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "tsc: fact 'TS2322' survives rtk",
+   true,
+   ""
+  ],
+  [
+   true,
+   "tsc: raw exit nonzero (sanity)",
+   true,
+   "rc=2"
+  ],
+  [
+   true,
+   "tsc: rtk exit nonzero",
+   true,
+   "rc=2"
+  ],
+  [
+   true,
+   "curl-jq: pipe output byte-identical",
+   true,
+   ""
+  ],
+  [
+   true,
+   "curl-body: body identical",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-mutate: tree hash identical",
+   true,
+   "2326fb9712c5 vs 2326fb9712c5"
+  ],
+  [
+   true,
+   "git-mutate: worktree clean both",
+   true,
+   ""
+  ],
+  [
+   true,
+   "git-mutate: commit message identical",
+   true,
+   ""
+  ]
+ ],
+ "tokens": [
+  [
+   "git-status",
+   172,
+   46
+  ],
+  [
+   "git-status-porcelain-wc",
+   2,
+   2
+  ],
+  [
+   "git-diff",
+   326,
+   260
+  ],
+  [
+   "git-log",
+   18,
+   18
+  ],
+  [
+   "rg-n",
+   44,
+   44
+  ],
+  [
+   "rg-wc",
+   2,
+   2
+  ],
+  [
+   "rg-l-sort",
+   15,
+   15
+  ],
+  [
+   "grep-rc",
+   27,
+   27
+  ],
+  [
+   "read-json-jq",
+   2,
+   2
+  ],
+  [
+   "ls",
+   143,
+   36
+  ],
+  [
+   "read-source",
+   47,
+   47
+  ],
+  [
+   "vitest",
+   602,
+   592
+  ],
+  [
+   "tsc",
+   24,
+   35
+  ],
+  [
+   "curl-jq",
+   2,
+   2
+  ],
+  [
+   "curl-body",
+   25,
+   25
+  ]
+ ]
+}

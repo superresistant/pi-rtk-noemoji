@@ -1,0 +1,16 @@
+node_modules/
+*.bak
+.debug.log
+*.tgz
+bench/corpus/
+bench/rtk-eval/bin/
+bench/rtk-eval/home/
+bench/rtk-eval/all-commands.jsonl
+bench/legacy/
+bench/rtk-eval/rewrites.jsonl
+bench/toon-eval/samples/
+bench/toon-eval/node_modules/
+bench/toon-eval/package*.json
+bench/rtk-eval/phase0-sample-rewrites.txt
+bench/rtk-eval/phase2/run-*.log
+.pi/
